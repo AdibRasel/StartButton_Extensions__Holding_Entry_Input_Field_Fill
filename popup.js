@@ -5,7 +5,6 @@ document.getElementById("fillBtn").addEventListener("click", () => {
         target: { tabId: tabs[0].id },
         func: () => {
           function autoFillForm() {
-            // ভূমি জরিপ এবং পরিশোধ সাল ঠিক করা
             const surveySelect = document.getElementById("survey");
             if (surveySelect) {
               surveySelect.value = "12";
@@ -18,17 +17,14 @@ document.getElementById("fillBtn").addEventListener("click", () => {
               paidYearSelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
-            // সব <select class="r2UsableLandType"> ধরছি
             const allUsableSelects = document.querySelectorAll("select.r2UsableLandType");
 
             allUsableSelects.forEach(select => {
-              // উপরের DOM-এ 2-3 লেভেল উপর থেকে rendered label পাওয়ার চেষ্টা
               let parent = select.closest("div");
               if (!parent) return;
 
               let labelSpan = null;
 
-              // কিছু লজিকাল DOM traversal করে .select2-selection__rendered খুঁজে বের করছি
               for (let i = 0; i < 5; i++) {
                 parent = parent?.parentElement;
                 if (!parent) break;
@@ -43,11 +39,10 @@ document.getElementById("fillBtn").addEventListener("click", () => {
 
               const isHouse = labelText?.includes("বাড়ী");
 
-              select.value = isHouse ? "4" : "3"; // 4 = আবাসিক, 3 = কৃষি২
+              select.value = isHouse ? "4" : "3"; 
               select.dispatchEvent(new Event('change', { bubbles: true }));
             });
 
-            // সর্বোচ্চ মিলিয়ে useable_start_year সিলেক্ট করা
             const startYearSelects = document.querySelectorAll('select.useable_start_year');
             const preferredYears = ["২০১৪", "২০১৫", "২০১৬", "২০১৭", "২০১৮", "২০১৯", "২০২০", "২০২১", "২০২২", "২০২৩", "২০২৪", "২০২৫"];
 
@@ -79,7 +74,6 @@ document.getElementById("fillBtn").addEventListener("click", () => {
             });
           }
 
-          // ডিলে দিয়ে DOM লোড শেষ হওয়ার জন্য অপেক্ষা
           setTimeout(autoFillForm, 500);
         }
       });
